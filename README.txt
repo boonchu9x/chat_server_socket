@@ -1,1 +1,0 @@
-﻿Ấn Ctrl + C để stop server node js, mũi tên lên để chạy node app.js
