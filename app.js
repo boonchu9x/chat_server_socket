@@ -69,7 +69,7 @@ io.sockets.on('connection', function (socket) {
 		if(Boolean(data.images))
 		 	image64 = new Buffer(data.images, 'binary').toString('base64')
 		socket.broadcast.emit('client-send-chat', {username: socket.username, message: data.message, send_img: image64});
-		console.log(socket.username + ": " + image64)
+		//console.log(socket.username + ": " + image64)
 		// emit toi tat ca moi nguoi
 		//socket.broadcast.emit('client-send-chat', {username: socket.username, message: chat});
 	
