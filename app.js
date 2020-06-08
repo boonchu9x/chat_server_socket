@@ -11,6 +11,19 @@ app.get("/", function(req, res){
 });
 
 var arrayUserName = [];
+var arrayImage = new Array();
+
+//folder images
+fs.readdir("images/", function(err, files) {
+    if (err) {
+        return;
+    }
+    files.forEach(function(f) {
+       arrayImage.push("images/" + f);
+    });
+});
+
+
 //server 
 io.sockets.on('connection', function (socket) {
 	
@@ -50,10 +63,13 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.emit('client-joined-chat', {username: username, number: arrayUserName.length});
 	});
 	
-	socket.on('client-send-chat', function (chat) {
-	  console.log(socket.username + ":" + chat);
+	socket.on('client-send-chat', function (data) {
+		//console.log(socket.username + ":" + chat)
+		var image64 = new Buffer(data.images, 'binary').toString('base64')
+		socket.broadcast.emit('client-send-chat', {username: socket.username, message: data.message, send_img: image64});
+		console.log(socket.username + ": " + image64)
 		// emit toi tat ca moi nguoi
-		socket.broadcast.emit('client-send-chat', {username: socket.username, message: chat});
+		//socket.broadcast.emit('client-send-chat', {username: socket.username, message: chat});
 	
 		// emit tới máy nguoi vừa gửi
 		//socket.emit('server-send-chat', {username: socket.client-stop-typing, message: chat});
@@ -84,4 +100,15 @@ io.sockets.on('connection', function (socket) {
 		
     });
  
+ 
+	function getFilenameImage(id){
+		return "images/" + id.substring(2) + getMilis() + ".png";
+	}
+
+
+	function getMilis(){
+		var date = new Date();
+		var milis = date.getTime();
+		return milis;
+	}
 });
