@@ -6,9 +6,9 @@ var fs = require("fs");
 //server open port 3000
 server.listen(process.env.PORT || 3000);
 
-app.get("/", function(req, res){
-	res.sendFile(__dirname + "/index.html");	
-});
+// app.get("/", function(req, res){
+// 	res.sendFile(__dirname + "/index.html");	
+// });
 
 var arrayUserName = [];
 var arrayImage = new Array();
